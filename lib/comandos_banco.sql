@@ -7,8 +7,6 @@ CREATE TABLE `professor` (
   PRIMARY KEY (`cpf`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
 CREATE TABLE `email` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(45) NOT NULL,
@@ -18,9 +16,18 @@ CREATE TABLE `email` (
   CONSTRAINT `cpfProfessor` FOREIGN KEY (`cpf`) REFERENCES `professor` (`cpf`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `usuario` (
+  `login` varchar(64) NOT NULL,
+  `senha` varchar(64) NOT NULL,
+  PRIMARY KEY (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+insert into usuario (login, senha) values ('root', '1234');
+insert into usuario (login, senha) values ('lili', '8888');
 
+ALTER TABLE aluno.usuario ADD superusuario BOOL NULL;
 
+update usuario set superusuario = true where login = 'root';
 
 
 
