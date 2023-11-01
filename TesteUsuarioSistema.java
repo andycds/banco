@@ -1,13 +1,13 @@
 import java.util.List;
 
-public class TesteUsuario {
+public class TesteUsuarioSistema {
     public static void main(String[] args) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        List<Usuario> lista;
+        UsuarioSistemaDAO usuarioDAO = new UsuarioSistemaDAO();
+        List<UsuarioSistema> lista;
         lista = usuarioDAO.listar();
         lista.forEach(u -> System.out.println(u));
 
-        Usuario novo = new Usuario("novo", "nova", false);
+        UsuarioSistema novo = new UsuarioSistema("novo", "nova", false);
         usuarioDAO.criar(novo);
 
         novo.setSuperusuario(true);
@@ -17,11 +17,11 @@ public class TesteUsuario {
         System.out.println("------------");
         usuarioDAO.atualizar(novo);
 
-        Usuario doBanco = usuarioDAO.obter("novo", "nova");
+        UsuarioSistema doBanco = usuarioDAO.obter("novo", "nova");
 
         System.out.println(doBanco.isSuperusuario());
 
-        Usuario naoExiste = usuarioDAO.obter("xxxx", "yyyy");
+        UsuarioSistema naoExiste = usuarioDAO.obter("xxxx", "yyyy");
 
         if (naoExiste == null) {
             System.out.println("Tudo certo, não trouxe usuário que não existe");

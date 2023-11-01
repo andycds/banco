@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAO {
+public class UsuarioSistemaDAO {
 
     Connection obterConexao() {
         try {
@@ -22,14 +22,15 @@ public class UsuarioDAO {
         return null;
     }
 
-    List<Usuario> listar() {
-        List<Usuario> lista = new ArrayList<>();
+    List<UsuarioSistema> listar() {
+        List<UsuarioSistema> lista = new ArrayList<>();
         try {
             String sql = "SELECT * FROM usuario";
             PreparedStatement ps = obterConexao().prepareStatement(sql);
             ResultSet resultado = ps.executeQuery();
             while (resultado.next()) {
-                Usuario usuario = new Usuario(resultado.getString(1), resultado.getString(2), resultado.getBoolean(3));
+                UsuarioSistema usuario = new UsuarioSistema(resultado.getString(1), resultado.getString(2),
+                        resultado.getBoolean(3));
                 lista.add(usuario);
             }
             return lista;
@@ -39,7 +40,7 @@ public class UsuarioDAO {
         }
     }
 
-    Usuario obter(String login, String senha) {
+    UsuarioSistema obter(String login, String senha) {
         try {
             String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?";
             PreparedStatement ps = obterConexao().prepareStatement(sql);
@@ -47,7 +48,7 @@ public class UsuarioDAO {
             ps.setString(2, senha);
             ResultSet resultado = ps.executeQuery();
             if (resultado.next()) {
-                return new Usuario(resultado.getString(1), resultado.getString(2), resultado.getBoolean(3));
+                return new UsuarioSistema(resultado.getString(1), resultado.getString(2), resultado.getBoolean(3));
             } else {
                 return null;
             }
@@ -57,7 +58,7 @@ public class UsuarioDAO {
         }
     }
 
-    boolean atualizar(Usuario usuario) {
+    boolean atualizar(UsuarioSistema usuario) {
         try {
             String sql = "UPDATE usuario SET senha = ?, superusuario = ? WHERE login = ?";
             PreparedStatement ps = obterConexao().prepareStatement(sql);
@@ -72,7 +73,7 @@ public class UsuarioDAO {
         }
     }
 
-    boolean criar(Usuario usuario) {
+    boolean criar(UsuarioSistema usuario) {
         try {
             String sql = "INSERT INTO usuario (login, senha, superusuario) VALUES (?, ?, ?)";
             PreparedStatement ps = obterConexao().prepareStatement(sql);
@@ -87,7 +88,7 @@ public class UsuarioDAO {
         }
     }
 
-    boolean apagar(Usuario usuario) {
+    boolean apagar(UsuarioSistema usuario) {
         try {
             String sql = "DELETE FROM usuario WHERE login = ?";
             PreparedStatement ps = obterConexao().prepareStatement(sql);
